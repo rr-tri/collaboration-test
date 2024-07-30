@@ -7,10 +7,10 @@
     "node": "20.12.2"
   },
   "scripts": {
-    "dev": "concurrently \"nodemon server/index.cjs\" \"vite\"",
-    "build": "tsc && vite build",
+    "dev": "NODE_ENV=development concurrently \"nodemon server/index.cjs\" \"vite\"",
+    "build": "NODE_ENV=production tsc && vite build",
     "preview": "vite preview",
-    "start": "node server/index.cjs"
+    "start": "NODE_ENV=production  server/index.cjs"
   },
   "keywords": [
     "collaboration",
