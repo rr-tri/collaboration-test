@@ -39,7 +39,8 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+frontend/node_modules/
+server/node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -78,7 +79,8 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
-
+server/.env
+frontend/.env
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

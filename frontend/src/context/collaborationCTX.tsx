@@ -125,25 +125,6 @@ export const CollaborationProvider: React.FC<CollaborationProviderProps> = ({
     };
   }, []);
 
-  // useEffect(() => {
-  //   const handleMouseMove = (e: MouseEvent) => {
-  //     if (state.roomId) {
-  //       const curCursor = {
-  //         roomId: state.roomId,
-  //         userId: curUser?.id,
-  //         x: e.clientX,
-  //         y: e.clientY,
-  //         name: curUser?.name,
-  //       };
-  //       socket.emit("update_cursor", curCursor);
-  //     }
-  //   };
-  //   window.addEventListener("mousemove", handleMouseMove);
-  //   return () => {
-  //     window.removeEventListener("mousemove", handleMouseMove);
-  //   };
-  // }, [state.roomId, curUser]);
-
   useEffect(() => {
     if (user) {
       const loggedUser = {
@@ -232,7 +213,7 @@ export const CollaborationProvider: React.FC<CollaborationProviderProps> = ({
         y: e.clientY,
         name: curUser?.name,
       };
-      console.log("cursor: ", curCursor.x, ", " + curCursor.y);
+      // console.log("cursor: ", curCursor.x, ", " + curCursor.y);
       socket.emit("update_cursor", curCursor);
     }
   };

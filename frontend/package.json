@@ -1,5 +1,5 @@
 {
-  "name": "collaboration",
+  "name": "collaboration-frontend",
   "version": "1.0.0",
   "type": "module",
   "description": "collaboration implementation using socket.io and react",
@@ -7,10 +7,9 @@
     "node": "20.12.2"
   },
   "scripts": {
-    "dev": "NODE_ENV=development concurrently \"nodemon server/index.cjs\" \"vite\"",
-    "build": "NODE_ENV=production tsc && vite build",
-    "preview": "vite preview",
-    "start": "NODE_ENV=production node server/index.cjs"
+    "dev": "NODE_ENV=development vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "collaboration",
@@ -20,6 +19,14 @@
   ],
   "author": "Ram Bahadur Regmi",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rr-tri/collaboration-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rr-tri/collaboration-test/issues"
+  },
+  "homepage": "https://github.com/rr-tri/collaboration-test#readme",
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/react": "^18.0.15",
@@ -27,8 +34,6 @@
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react": "^2.0.0",
     "autoprefixer": "^10.4.19",
-    "concurrently": "^8.2.2",
-    "nodemon": "^3.1.4",
     "postcss": "^8.4.40",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -44,11 +49,8 @@
     "@radix-ui/react-toast": "^1.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
     "lucide-react": "^0.416.0",
     "react-router-dom": "^6.25.1",
-    "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",

@@ -1,0 +1,38 @@
+{
+  "name": "collaboration-server",
+  "version": "1.0.0",
+  "description": "socket.io+node server for collaboration demo",
+  "main": "index.js",
+  "engines": {
+    "node": "20.12.2"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon index.cjs",
+    "start": "NODE_ENV=production node index.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rr-tri/collaboration-test.git"
+  },
+  "keywords": [
+    "server",
+    "socket.io",
+    "collab",
+    "chat"
+  ],
+  "author": "Ram B Regmi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rr-tri/collaboration-test/issues"
+  },
+  "homepage": "https://github.com/rr-tri/collaboration-test#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

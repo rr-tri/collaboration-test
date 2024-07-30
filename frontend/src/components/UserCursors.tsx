@@ -13,6 +13,7 @@ interface UserCursorsProps {
 }
 
 const UserCursors: React.FC<UserCursorsProps> = ({ cursors, curId }) => {
+  
   return (
     <>
       {Object.entries(cursors)?.map(([userId, cursor]) => {

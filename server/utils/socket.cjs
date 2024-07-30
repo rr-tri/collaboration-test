@@ -6,8 +6,12 @@ let rooms = {};
 const initSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: ["http://localhost:5173", "http://localhost:80"],
+      origin: [
+        "http://localhost:5173",
+        "https://collaboration-demo.onrender.com",
+      ],
       methods: ["GET", "POST"],
+      credentials: true,
     },
   });
 
