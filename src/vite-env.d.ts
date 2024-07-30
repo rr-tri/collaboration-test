@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-
+declare module 'uuid'
 
 interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string
