@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "collaboration implementation using socket.io and react",
+  "engines": {
+    "node": "20.12.2"
+  },
   "scripts": {
     "dev": "concurrently \"nodemon server/index.cjs\" \"vite\"",
     "build": "tsc && vite build",
