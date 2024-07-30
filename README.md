@@ -1,4 +1,3 @@
-
 # Collaboration App
 
 This is a React and Socket.IO-based collaboration app. Users can start and stop collaboration sessions, send messages, and see the mouse pointers of other users in real-time. The app supports generating unique usernames for guests and integrates with Clerk for authentication.
@@ -24,7 +23,6 @@ This is a React and Socket.IO-based collaboration app. Users can start and stop 
 - Node.js and npm installed
 - Clerk account (for authentication)
 
-
 ### Installation
 
 1. **Clone the repository:**
@@ -37,28 +35,29 @@ cd collaboration-test
 2. **Install dependencies:**
 
 ```bash
-npm install
+cd ./frontend && npm install && cd .. && cd./server && npm install
+
 ```
 
 3. **Set up Clerk:**
 
    Follow the instructions on the [Clerk documentation](https://docs.clerk.dev/) to set up Clerk for your app. Update your Clerk frontend API key in the `.env` file.
 
-
 ### Running the App
+
+At the root directory of the project run the followiing command of your choice:
 
 1. **Start the Vite development server and socket.io development server:**
 
 ```bash
-npm run dev
+cd ./server && npm run dev && cd .. && cd ./frontend && npm run dev
 ```
 
 2. **Start the the app (production):**
 
 ```bash
-npm start
+cd ./frontend && npm run build && cd .. && cd./server && npm start
 ```
-
 
 ### Context and State Management
 
