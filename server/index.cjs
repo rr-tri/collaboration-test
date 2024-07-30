@@ -10,4 +10,5 @@ initSocket(server);
 
 server.listen(PORT, () => {
   logger.info("Server is listening on http://localhost:3000");
+  console.log("port: ", PORT);
 });
