@@ -16,7 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "types": ["vite/client", "uuid"],
     "paths": {
       "@/*": ["./src/*"]
     }
