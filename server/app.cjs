@@ -16,7 +16,6 @@ app.use(
       "https://collaboration-demo.onrender.com",
     ],
     methods: ["GET", "POST"],
-    credentials: true,
   })
 );
 
