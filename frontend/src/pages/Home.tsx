@@ -1,38 +1,50 @@
-import { UserButton } from "@clerk/clerk-react";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-
-import { useCollaboration } from "@/context/collaborationCTX";
-import ChatBox from "@/components/chatBox";
-import UserCursors from "@/components/UserCursors";
+} from '@/components/ui/popover';
+import ChatBox from '@/components/chatBox';
+import UserCursors from '@/components/UserCursors';
+import NavMenu from '@/components/NavMenu';
+import CollaborationControl from '@/components/CollaborationControl';
+import { useCollaboration } from '@/context/collaborationCTX';
+import { DialogProvider } from '@/context/dialogctx';
+import { Avatar } from '@/components/ui/avatar';
+import { AvatarFallback } from '@radix-ui/react-avatar';
+import { cn } from '@/lib/utils';
+import { getRandCol } from '@/lib/helper';
+import { MessageSquareDot, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import UserList from '@/components/UserList';
+import DrawingBoard from '@/components/Board';
 
 const Home: React.FC = () => {
   const {
     state,
     curUser,
-    startCollaboration,
-    leaveCollaboration,
+    userColors,
     sendMessage,
     handleMouseMove,
+    leaveCollaboration,
   } = useCollaboration();
 
   return (
-    <div className="relative w-100 min-h-[100vh]" onMouseMove={handleMouseMove}>
-     
-      {state.roomId ? (
+    <div
+      className="relative  w-100 min-h-[100vh]"
+      onMouseMove={handleMouseMove}
+    >
+      <DialogProvider>
+        <NavMenu collaborating={state.roomId ? true : false} />
+        <CollaborationControl />
+      </DialogProvider>
+
+      {state.roomId && (
         <>
-          {(state.users.length > 1 || state.messages) && (
-            <div className="absolute bottom-4 right-4">
+          {state.messages && (
+            <div className="absolute bottom-4 right-4 z-50">
               <Popover>
                 <PopoverTrigger>
-                  <div className=" w-10 h-10 rounded-full border flex flex-col items-center justify-center bg-red-100 shadow-sm">
-                    <img src="/message.svg" className="h-6 w-6 " />
-                  </div>
+                  <MessageSquareDot className=" w-10 h-10 rounded-full border p-1 bg-amber-500 shadow-sm" />
                 </PopoverTrigger>
                 <PopoverContent className="h-[30rem] w-[20rem] mr-2 bg-green-400 p-1">
                   <ChatBox
@@ -45,29 +57,19 @@ const Home: React.FC = () => {
             </div>
           )}
 
-          <Button
-            className="m-1"
-            variant={"destructive"}
-            onClick={leaveCollaboration}
-          >
-            Stop Session
-          </Button>
           {state.cursors && curUser && (
-            <UserCursors curId={curUser.id} cursors={state.cursors} />
+            <UserCursors
+              curId={curUser.id}
+              userColors={userColors}
+              cursors={state.cursors}
+            />
           )}
-          <ul>
-            {state.users.map((user, i) => (
-              <li key={i + user.id}>{user.name}</li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <>
-          <Button onClick={startCollaboration} className="m-1" size={"sm"}>
-            Start Session
-          </Button>
+          {state.users.length > 1 && <UserList />}
         </>
       )}
+      <div className='z-1'>
+        <DrawingBoard />
+      </div>
     </div>
   );
 };

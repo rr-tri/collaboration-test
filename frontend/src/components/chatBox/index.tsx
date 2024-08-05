@@ -1,6 +1,6 @@
-import { FC } from "react";
-import MessageList from "./MessageList";
-import MessageInput from "./MessageInput";
+import { FC } from 'react';
+import MessageList from './MessageList';
+import MessageInput from './MessageInput';
 
 interface ChatBoxInterface {
   curUser: RoomUser | null;
@@ -10,7 +10,7 @@ interface ChatBoxInterface {
 
 const ChatBox: FC<ChatBoxInterface> = ({ curUser, messages, sendMessage }) => {
   return (
-    <div className="w-full h-full rounded-md  flex flex-col ">
+    <div className="w-full h-full rounded-md  flex flex-col">
       <div className="h-[90%]">
         <MessageList curUser={curUser?.name} messages={messages} />
       </div>
