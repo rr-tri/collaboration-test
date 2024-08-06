@@ -89,6 +89,10 @@ const initSocket = (server) => {
         io.to(roomId).emit("room_users", rooms[roomId].users);
         io.to(roomId).emit("user_left", user);
         logger.info(`${user.name} left room ${roomId.slice(0, 10)}`);
+        if (rooms[roomId].users.length === 0) {
+          delete rooms[roomId];
+          io.to(roomId).emit("room_closed");
+        }
       }
       // logger.info("after leaving room: rooms=", rooms);
       logger.info("socket rooms on leave room= ", socket.rooms);
@@ -129,7 +133,7 @@ const initSocket = (server) => {
       io.to(roomId).emit("draw_brush_lines", rooms[roomId].lines);
       // logger.info("----fetched the brush strokes------");
     });
-    
+
     socket.on("get_brush_lines", (roomId) => {
       // logger.info("----fetching the brush strokes------");
       if (rooms[roomId]) {

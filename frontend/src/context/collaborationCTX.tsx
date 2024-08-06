@@ -122,7 +122,7 @@ export const CollaborationProvider: React.FC<CollaborationProviderProps> = ({
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { toast } = useToast();
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -196,23 +196,9 @@ export const CollaborationProvider: React.FC<CollaborationProviderProps> = ({
     };
   }, [state.roomId, curUser]);
 
-  useEffect(() => {
-    const storedCurUser = JSON.parse(localStorage.getItem('curUser') || '');
-    console.log(storedCurUser);
-    if (storedCurUser) {
-      setCurUser(storedCurUser);
-    } else {
-      console.log('else stored', storedCurUser);
-      // no user and not logged in
-      const newCurUser: RoomUser = {
-        id: 'user_' + uuidv4(),
-        name: `Guest_${uuidv4().slice(0, 7)}`,
-        loggedIn: false,
-      };
-      localStorage.setItem('curUser', JSON.stringify(newCurUser));
-      setCurUser(newCurUser);
-    }
-    if (user) {
+  const getStoredUser = () => {
+    const storedCurUser = JSON.parse(localStorage.getItem('curUser') as string);
+    if (isSignedIn) {
       if (storedCurUser.id !== user.id) {
         const loggedUser = {
           id: user.id,
@@ -220,10 +206,24 @@ export const CollaborationProvider: React.FC<CollaborationProviderProps> = ({
           loggedIn: true,
         };
         localStorage.setItem('curUser', JSON.stringify(loggedUser));
-        setCurUser(loggedUser);
+        return loggedUser;
+      } else {
+        return storedCurUser;
+      }
+    } else {
+      if (storedCurUser) {
+        return storedCurUser;
+      } else {
+        const newCurUser: RoomUser = {
+          id: 'user_' + uuidv4(),
+          name: `Guest_${uuidv4().slice(0, 7)}`,
+          loggedIn: false,
+        };
+        localStorage.setItem('curUser', JSON.stringify(newCurUser));
+        return newCurUser;
       }
     }
-  }, [user]);
+  };
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.hash.replace('#', ''));
@@ -231,40 +231,40 @@ export const CollaborationProvider: React.FC<CollaborationProviderProps> = ({
     if (room) {
       dispatch({ type: 'SET_ROOM_ID', payload: room });
       joinCollaboration(room);
+    } else {
+      leaveCollaboration();
     }
   }, [location]);
 
-  const joinCollaboration = useCallback(
-    (roomId: string) => {
-      if (curUser?.name) {
-        socket.emit('join_room', { roomId, user: curUser });
-      } else {
-        console.log('no user found');
-      }
-    },
-    [curUser],
-  );
+  const joinCollaboration = (roomId: string) => {
+    const cUser = getStoredUser();
+    if (cUser) {
+      socket.emit('join_room', { roomId, user: cUser });
+      setCurUser(cUser);
+    } else {
+      console.log('no user found');
+    }
+  };
 
   const startCollaboration = () => {
-    if (curUser) {
+    const cUser = getStoredUser();
+    if (cUser) {
       const newRoomId = 'Room_' + uuidv4();
       navigate(`#room=${newRoomId}`);
       dispatch({ type: 'SET_ROOM_ID', payload: newRoomId });
       // socket.connect();
-      socket.emit('create_room', { roomId: newRoomId, user: curUser });
+      socket.emit('create_room', { roomId: newRoomId, user: cUser });
+      setCurUser(cUser);
     }
   };
 
   const leaveCollaboration = () => {
     if (state.roomId) {
-      if (state.users.length < 2) {
-        socket.emit('close_room', state.roomId);
-      } else {
-        socket.emit('leave_room', {
-          roomId: state.roomId,
-          user: curUser,
-        });
-      }
+      socket.emit('leave_room', {
+        roomId: state.roomId,
+        user: curUser,
+      });
+
       // socket.disconnect();
       dispatch({ type: 'RESET' });
       navigate('/');

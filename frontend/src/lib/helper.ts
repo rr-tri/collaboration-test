@@ -25,3 +25,4 @@ export const getRandCol = () => {
   const x = colors[0];
   return x;
 };
+
